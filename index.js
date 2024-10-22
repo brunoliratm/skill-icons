@@ -1,5 +1,8 @@
 const icons = require('./dist/icons.json');
+
+// Cria uma lista única de nomes de ícones
 const iconNameList = [...new Set(Object.keys(icons).map(i => i.split('-')[0]))];
+
 const shortNames = {
   js: 'javascript',
   ts: 'typescript',
@@ -42,6 +45,8 @@ const shortNames = {
   ghactions: 'githubactions',
   sklearn: 'scikitlearn',
 };
+
+// Filtra ícones temáticos
 const themedIcons = [
   ...Object.keys(icons)
     .filter(i => i.includes('-light') || i.includes('-dark'))
@@ -61,7 +66,7 @@ function generateSvg(iconNames, perLine) {
   const scaledWidth = length * SCALE;
 
   return `
-  <svg width="${scaledWidth}" height="${scaledHeight}" viewBox="0 0 ${length} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+  <svg width="${scaledWidth}" height="${scaledHeight}" viewBox="0 0 ${length} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg">
     ${iconSvgList
       .map(
         (i, index) =>
@@ -87,23 +92,24 @@ function parseShortNames(names, theme = 'dark') {
         shortNames[name] +
         (themedIcons.includes(shortNames[name]) ? `-${theme}` : '')
       );
-  });
+  }).filter(Boolean); // Filtra nomes não válidos
 }
 
 async function handleRequest(request) {
   const { pathname, searchParams } = new URL(request.url);
-
   const path = pathname.replace(/^\/|\/$/g, '');
 
   if (path === 'icons') {
     const iconParam = searchParams.get('i') || searchParams.get('icons');
     if (!iconParam)
       return new Response("You didn't specify any icons!", { status: 400 });
+
     const theme = searchParams.get('t') || searchParams.get('theme');
     if (theme && theme !== 'dark' && theme !== 'light')
       return new Response('Theme must be either "light" or "dark"', {
         status: 400,
       });
+
     const perLine = searchParams.get('perline') || ICONS_PER_LINE;
     if (isNaN(perLine) || perLine < -1 || perLine > 50)
       return new Response('Icons per line must be a number between 1 and 50', {
@@ -115,7 +121,7 @@ async function handleRequest(request) {
     else iconShortNames = iconParam.split(',');
 
     const iconNames = parseShortNames(iconShortNames, theme || undefined);
-    if (!iconNames)
+    if (!iconNames.length)
       return new Response("You didn't format the icons param correctly!", {
         status: 400,
       });
