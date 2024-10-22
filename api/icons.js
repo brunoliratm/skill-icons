@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import path from 'path';
 
 export default function handler(req, res) {
-  const icons = JSON.parse(readFileSync(path.resolve('./dist/icons.json')));
+  const icons = JSON.parse(readFileSync(path.resolve('../dist/icons.json')));  // Lê o arquivo JSON com os ícones
   const queryIcons = req.query.i ? req.query.i.split(',') : [];
   const theme = req.query.theme || 'light';
 
