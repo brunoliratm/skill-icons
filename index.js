@@ -1,8 +1,4 @@
 import icons from './dist/icons.json';
-import icons from '/var/task/dist/icons.json'
-
-// Cria uma lista única de nomes de ícones
-const iconNameList = [...new Set(Object.keys(icons).map(i => i.split('-')[0]))];
 
 const shortNames = {
   js: 'javascript',
@@ -47,21 +43,28 @@ const shortNames = {
   sklearn: 'scikitlearn',
 };
 
-// Filtra ícones temáticos
-const themedIcons = [
-  ...Object.keys(icons)
-    .filter(i => i.includes('-light') || i.includes('-dark'))
-    .map(i => i.split('-')[0]),
-];
+// Função para mapear short names para nomes completos
+function parseShortNames(names, theme) {
+  return names.map(name => {
+    // Primeiro verifica se o short name existe
+    if (shortNames[name]) {
+      return shortNames[name];
+    }
+    return theme ? `${name}-${theme}` : name;
+  });
+}
+
+// Cria uma lista única de nomes de ícones
+const iconNameList = [...new Set(Object.keys(icons).map(i => i.split('-')[0]))];
 
 const ICONS_PER_LINE = 15;
 const ONE_ICON = 48;
 const SCALE = ONE_ICON / (300 - 44);
 
 function generateSvg(iconNames, perLine) {
-  const iconSvgList = iconNames.map(i => icons[i]).filter(Boolean); // Certifique-se de que não haja valores undefined.
+  const iconSvgList = iconNames.map(i => icons[i]).filter(Boolean);
 
-  if (iconSvgList.length === 0) return null; // Se não houver ícones, retorne null.
+  if (iconSvgList.length === 0) return null;
 
   const length = Math.min(perLine * 300, iconNames.length * 300) - 44;
   const height = Math.ceil(iconSvgList.length / perLine) * 300 - 44;
@@ -72,9 +75,7 @@ function generateSvg(iconNames, perLine) {
   <svg width="${scaledWidth}" height="${scaledHeight}" viewBox="0 0 ${length} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg">
     ${iconSvgList
       .map((i, index) => `
-        <g transform="translate(${(index % perLine) * 300}, ${
-          Math.floor(index / perLine) * 300
-        })">
+        <g transform="translate(${(index % perLine) * 300}, ${Math.floor(index / perLine) * 300})">
           ${i}
         </g>
       `)
@@ -82,7 +83,6 @@ function generateSvg(iconNames, perLine) {
   </svg>
   `;
 }
-
 
 async function handleRequest(request) {
   const { pathname, searchParams } = new URL(request.url);
@@ -121,7 +121,6 @@ async function handleRequest(request) {
 
   return fetch(request);
 }
-
 
 addEventListener('fetch', event => {
   event.respondWith(
