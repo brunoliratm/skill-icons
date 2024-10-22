@@ -69,11 +69,10 @@ function generateSvg(iconNames, perLine) {
   <svg width="${scaledWidth}" height="${scaledHeight}" viewBox="0 0 ${length} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg">
     ${iconSvgList
       .map(
-        (i, index) =>
-          `
+        (i, index) => `
         <g transform="translate(${(index % perLine) * 300}, ${
-            Math.floor(index / perLine) * 300
-          })">
+          Math.floor(index / perLine) * 300
+        })">
           ${i}
         </g>
         `
