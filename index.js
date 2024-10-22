@@ -1,4 +1,5 @@
-const icons = require('./dist/icons.json');
+import icons from './dist/icons.json';
+import icons from '/var/task/dist/icons.json'
 
 // Cria uma lista única de nomes de ícones
 const iconNameList = [...new Set(Object.keys(icons).map(i => i.split('-')[0]))];
