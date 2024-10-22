@@ -12,6 +12,7 @@ export default function handler(req, res) {
       result[icon] = icons[icon];  // Pega o conteúdo SVG
     }
   }
-
+  console.log(queryIcons);
+  console.log(icons);
   res.json(result);  // Retorna os ícones solicitados
 }
