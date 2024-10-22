@@ -60,6 +60,8 @@ const SCALE = ONE_ICON / (300 - 44);
 function generateSvg(iconNames, perLine) {
   const iconSvgList = iconNames.map(i => icons[i]).filter(Boolean); // Certifique-se de que não haja valores undefined.
 
+  if (iconSvgList.length === 0) return null; // Se não houver ícones, retorne null.
+
   const length = Math.min(perLine * 300, iconNames.length * 300) - 44;
   const height = Math.ceil(iconSvgList.length / perLine) * 300 - 44;
   const scaledHeight = height * SCALE;
@@ -68,31 +70,18 @@ function generateSvg(iconNames, perLine) {
   return `
   <svg width="${scaledWidth}" height="${scaledHeight}" viewBox="0 0 ${length} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg">
     ${iconSvgList
-      .map(
-        (i, index) => `
+      .map((i, index) => `
         <g transform="translate(${(index % perLine) * 300}, ${
           Math.floor(index / perLine) * 300
         })">
           ${i}
         </g>
-        `
-      )
+      `)
       .join('')}
   </svg>
   `;
 }
 
-function parseShortNames(names, theme = 'dark') {
-  return names.map(name => {
-    if (iconNameList.includes(name))
-      return name + (themedIcons.includes(name) ? `-${theme}` : '');
-    else if (name in shortNames)
-      return (
-        shortNames[name] +
-        (themedIcons.includes(shortNames[name]) ? `-${theme}` : '')
-      );
-  }).filter(Boolean); // Filtra nomes não válidos
-}
 
 async function handleRequest(request) {
   const { pathname, searchParams } = new URL(request.url);
@@ -116,7 +105,7 @@ async function handleRequest(request) {
 
     // Divide os ícones e faz o parse
     const iconShortNames = iconParam.split(',').map(name => name.trim());
-    const iconNames = parseShortNames(iconShortNames, theme || undefined).filter(Boolean);
+    const iconNames = parseShortNames(iconShortNames, theme || undefined);
 
     // Gera o SVG
     const svg = generateSvg(iconNames, perLine);
@@ -129,9 +118,9 @@ async function handleRequest(request) {
     return new Response(svg, { headers: { 'Content-Type': 'image/svg+xml' } });
   }
 
-  // Outras rotas
-  // ...
+  return fetch(request);
 }
+
 
 addEventListener('fetch', event => {
   event.respondWith(
