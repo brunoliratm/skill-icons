@@ -58,7 +58,7 @@ const ONE_ICON = 48;
 const SCALE = ONE_ICON / (300 - 44);
 
 function generateSvg(iconNames, perLine) {
-  const iconSvgList = iconNames.map(i => icons[i]);
+  const iconSvgList = iconNames.map(i => icons[i]).filter(Boolean); // Certifique-se de que não haja valores undefined.
 
   const length = Math.min(perLine * 300, iconNames.length * 300) - 44;
   const height = Math.ceil(iconSvgList.length / perLine) * 300 - 44;
@@ -77,7 +77,7 @@ function generateSvg(iconNames, perLine) {
         </g>
         `
       )
-      .join(' ')}
+      .join('')}
   </svg>
   `;
 }
