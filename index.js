@@ -124,8 +124,11 @@ async function handleRequest(request) {
       return new Response("You didn't format the icons param correctly!", {
         status: 400,
       });
-
+      // Log para depuração
+    console.log('Icon Names:', iconNames);
+    console.log('Filtered SVGs:', iconSvgList);
     const svg = generateSvg(iconNames, perLine);
+    console.log('Generated SVG:', svg);
 
     return new Response(svg, { headers: { 'Content-Type': 'image/svg+xml' } });
   } else if (path === 'api/icons') {
