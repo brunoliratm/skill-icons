@@ -1,4 +1,4 @@
-import icons from './dist/icons.json';
+const icons = require('./dist/icons.json');
 
 const shortNames = {
   js: 'javascript',

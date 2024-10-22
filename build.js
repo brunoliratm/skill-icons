@@ -1,5 +1,5 @@
-import { readdirSync, readFileSync, existsSync, mkdirSync, writeFileSync } from 'fs';
-import { join } from 'path';
+const { readdirSync, readFileSync, existsSync, mkdirSync, writeFileSync } = require('fs');
+const { join } = require('path');
 
 // Lê todos os arquivos do diretório 'icons'
 const iconsDir = readdirSync('./icons');

@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
-import path from 'path';
+const { readFileSync } = require('fs');
+const path = require('path');
 
 export default function handler(req, res) {
   try {
