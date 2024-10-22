@@ -81,7 +81,7 @@ function generateSvg(iconNames, perLine) {
       `)
       .join('')}
   </svg>
-  `;
+  `.trim();;
 }
 
 async function handleRequest(request) {
