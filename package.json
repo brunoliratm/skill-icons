@@ -1,12 +1,11 @@
 {
-	"name": "skill-icons",
+	"name": "skill-icons-v2",
 	"version": "1.0.0",
 	"main": "index.js",
 	"license": "MIT",
 	"scripts": {
-		"dev": "node build.js && miniflare --watch",
-		"build": "node build.js",
-		"deploy": "node build.js"
+		"dev": "node build.js",
+		"build": "node build.js build --output dist"
 	},
 	"devDependencies": {
 		"prettier": "^2.5.1"
