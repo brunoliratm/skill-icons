@@ -50,7 +50,9 @@ const shortNames = {
 // Função para mapear os short names para nomes completos e aplicar o tema
 function parseShortNames(names, theme) {
   return names.map(name => {
+    console.log(`Procurando shortname para: ${name}`);
     const fullName = shortNames[name] || name; // Mapeia o nome curto ou usa o nome original se não houver short name
+    console.log(`Mapped to: ${fullName}`);
     return theme ? `${fullName}-${theme}` : fullName; // Aplica o tema, se fornecido
   });
 }
