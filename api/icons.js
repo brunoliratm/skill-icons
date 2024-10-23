@@ -26,14 +26,16 @@ export default function handler(req, res) {
     }
 
     // Define o tamanho de cada ícone e a separação entre eles
-    const iconSize = 30; // Tamanho padrão de um ícone
+    const iconSize = 100; // Tamanho desejado para cada ícone
     const spacing = 20; // Espaçamento entre ícones
+    const originalSize = 256; // Supondo que o tamanho original dos ícones seja 256px
+    const scale = iconSize / originalSize; // Fator de escala para redimensionar os ícones
 
-    // Envolve os SVGs dentro de um único elemento <svg> e aplica a posição correta a cada um
+    // Envolve os SVGs dentro de um único elemento <svg> e aplica a posição e escala corretas a cada um
     const combinedSvg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="${(iconSize + spacing) * svgList.length}" height="${iconSize}">
         ${svgList.map((svg, index) => `
-          <g transform="translate(${index * (iconSize + spacing)}, 0)">
+          <g transform="translate(${index * (iconSize + spacing)}, 0) scale(${scale})">
             ${svg}
           </g>
         `).join('')}
