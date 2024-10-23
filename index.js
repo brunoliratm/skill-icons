@@ -1,4 +1,8 @@
-const icons = require('./dist/icons.json');
+const { readFileSync } = require('fs');
+const path = require('path');
+
+// Carrega o JSON com os ícones
+const icons = JSON.parse(readFileSync(path.resolve('dist', 'icons.json'), 'utf8'));
 
 const shortNames = {
   js: 'javascript',
@@ -43,31 +47,26 @@ const shortNames = {
   sklearn: 'scikitlearn',
 };
 
-// Função para mapear short names para nomes completos
+// Função para mapear os short names para nomes completos e aplicar o tema
 function parseShortNames(names, theme) {
   return names.map(name => {
-    // Primeiro verifica se o short name existe
-    if (shortNames[name]) {
-      return shortNames[name];
-    }
-    return theme ? `${name}-${theme}` : name;
+    const fullName = shortNames[name] || name; // Mapeia o nome curto ou usa o nome original se não houver short name
+    return theme ? `${fullName}-${theme}` : fullName; // Aplica o tema, se fornecido
   });
 }
 
-// Cria uma lista única de nomes de ícones
-const iconNameList = [...new Set(Object.keys(icons).map(i => i.split('-')[0]))];
-
-const ICONS_PER_LINE = 15;
-const ONE_ICON = 48;
-const SCALE = ONE_ICON / (300 - 44);
-
+// Função para gerar o SVG
 function generateSvg(iconNames, perLine) {
   const iconSvgList = iconNames.map(i => icons[i]).filter(Boolean);
 
   if (iconSvgList.length === 0) return null;
 
-  const length = Math.min(perLine * 300, iconNames.length * 300) - 44;
-  const height = Math.ceil(iconSvgList.length / perLine) * 300 - 44;
+  const ONE_ICON = 48;
+  const ICONS_PER_LINE = perLine || 15;
+  const SCALE = ONE_ICON / (300 - 44);
+
+  const length = Math.min(ICONS_PER_LINE * 300, iconNames.length * 300) - 44;
+  const height = Math.ceil(iconSvgList.length / ICONS_PER_LINE) * 300 - 44;
   const scaledHeight = height * SCALE;
   const scaledWidth = length * SCALE;
 
@@ -75,13 +74,13 @@ function generateSvg(iconNames, perLine) {
   <svg width="${scaledWidth}" height="${scaledHeight}" viewBox="0 0 ${length} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg">
     ${iconSvgList
       .map((i, index) => `
-        <g transform="translate(${(index % perLine) * 300}, ${Math.floor(index / perLine) * 300})">
+        <g transform="translate(${(index % ICONS_PER_LINE) * 300}, ${Math.floor(index / ICONS_PER_LINE) * 300})">
           ${i}
         </g>
       `)
       .join('')}
   </svg>
-  `.trim();;
+  `.trim();
 }
 
 async function handleRequest(request) {
@@ -99,14 +98,14 @@ async function handleRequest(request) {
       return new Response('Theme must be either "light" or "dark"', { status: 400 });
     }
 
-    const perLine = parseInt(searchParams.get('perline')) || ICONS_PER_LINE;
+    const perLine = parseInt(searchParams.get('perline')) || 15;
     if (isNaN(perLine) || perLine < 1 || perLine > 50) {
       return new Response('Icons per line must be a number between 1 and 50', { status: 400 });
     }
 
-    // Divide os ícones e faz o parse
+    // Divide os ícones e faz o parse para nomes completos
     const iconShortNames = iconParam.split(',').map(name => name.trim());
-    const iconNames = parseShortNames(iconShortNames, theme || undefined);
+    const iconNames = parseShortNames(iconShortNames, theme);
 
     // Gera o SVG
     const svg = generateSvg(iconNames, perLine);
@@ -122,6 +121,7 @@ async function handleRequest(request) {
   return fetch(request);
 }
 
+// Aqui faltava o fechamento correto da função addEventListener
 addEventListener('fetch', event => {
   event.respondWith(
     handleRequest(event.request).catch(
