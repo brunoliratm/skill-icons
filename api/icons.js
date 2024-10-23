@@ -26,7 +26,7 @@ export default function handler(req, res) {
     }
 
     // Define o tamanho de cada ícone e a separação entre eles
-    const iconSize = 100; // Tamanho padrão de um ícone
+    const iconSize = 30; // Tamanho padrão de um ícone
     const spacing = 20; // Espaçamento entre ícones
 
     // Envolve os SVGs dentro de um único elemento <svg> e aplica a posição correta a cada um
