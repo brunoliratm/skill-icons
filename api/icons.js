@@ -27,7 +27,7 @@ export default function handler(req, res) {
 
     // Define o tamanho de cada ícone e a separação entre eles
     const iconSize = 48; // Tamanho desejado para cada ícone
-    const spacing = 20; // Espaçamento entre ícones
+    const spacing = 10; // Espaçamento entre ícones
     const originalSize = 256; // Supondo que o tamanho original dos ícones seja 256px
     const scale = iconSize / originalSize; // Fator de escala para redimensionar os ícones
 
