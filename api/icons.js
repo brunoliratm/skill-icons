@@ -25,10 +25,18 @@ export default function handler(req, res) {
       return res.status(404).json({ error: 'Nenhum ícone encontrado para os nomes fornecidos.' });
     }
 
-    // Envolve os SVGs dentro de um único elemento <svg>
+    // Define o tamanho de cada ícone e a separação entre eles
+    const iconSize = 100; // Tamanho padrão de um ícone
+    const spacing = 20; // Espaçamento entre ícones
+
+    // Envolve os SVGs dentro de um único elemento <svg> e aplica a posição correta a cada um
     const combinedSvg = `
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-        ${svgList.join('')}
+      <svg xmlns="http://www.w3.org/2000/svg" width="${(iconSize + spacing) * svgList.length}" height="${iconSize}">
+        ${svgList.map((svg, index) => `
+          <g transform="translate(${index * (iconSize + spacing)}, 0)">
+            ${svg}
+          </g>
+        `).join('')}
       </svg>
     `;
 
