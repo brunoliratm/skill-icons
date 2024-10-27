@@ -48,34 +48,35 @@ const shortNames = {
   sklearn: 'scikitlearn',
 };
 
-// Corrigida para mapear os nomes curtos e aplicar tema corretamente
+// Função corrigida para mapear os nomes curtos com nomes completos e aplicar o tema se especificado
 function parseShortNames(names, theme) {
   return names.map(name => {
     const fullName = shortNames[name] || name; // Mapeia para o nome completo, se existir
-    return theme ? `${fullName}-${theme}` : fullName; // Aplica o tema se houver
+    const themedName = theme ? `${fullName}-${theme}` : fullName; // Aplica o tema, se houver
+    return themedName;
   });
 }
 
-// Função para gerar o SVG com layout correto e configuração por linha
+// Função para gerar o SVG com layout e quantidade de ícones por linha corretos
 function generateSvg(iconNames, perLine = 15) {
-  const iconSvgList = iconNames.map(i => icons[i]).filter(Boolean);
+  const iconSvgList = iconNames.map(name => icons[name]).filter(Boolean);
 
   if (iconSvgList.length === 0) return null;
 
-  const ONE_ICON = 48;  // Tamanho de um ícone individual
-  const ICONS_PER_LINE = Math.min(perLine, iconNames.length);  // Limita os ícones por linha
+  const ONE_ICON_SIZE = 48;
+  const ICONS_PER_LINE = Math.min(perLine, iconNames.length);
 
-  const width = ICONS_PER_LINE * ONE_ICON;
-  const height = Math.ceil(iconSvgList.length / ICONS_PER_LINE) * ONE_ICON;
+  // Define largura total e altura do SVG com base no número de linhas e ícones
+  const width = ICONS_PER_LINE * ONE_ICON_SIZE;
+  const height = Math.ceil(iconSvgList.length / ICONS_PER_LINE) * ONE_ICON_SIZE;
 
   return `
     <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
-      ${iconSvgList
-        .map((svg, index) => `
-          <g transform="translate(${(index % ICONS_PER_LINE) * ONE_ICON}, ${Math.floor(index / ICONS_PER_LINE) * ONE_ICON})">
+      ${iconSvgList.map((svg, index) => `
+          <g transform="translate(${(index % ICONS_PER_LINE) * ONE_ICON_SIZE}, ${Math.floor(index / ICONS_PER_LINE) * ONE_ICON_SIZE})">
             ${svg}
           </g>
-        `).join('')}
+      `).join('')}
     </svg>
   `.trim();
 }
@@ -95,7 +96,7 @@ async function handleRequest(request) {
       return new Response('Theme must be either "light" or "dark"', { status: 400 });
     }
 
-    const perLine = parseInt(searchParams.get('perline'), 10);
+    const perLine = parseInt(searchParams.get('perline'), 10) || 15;
     if (isNaN(perLine) || perLine < 1 || perLine > 50) {
       return new Response('Icons per line must be a number between 1 and 50', { status: 400 });
     }
