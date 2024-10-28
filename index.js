@@ -48,6 +48,34 @@ const shortNames = {
   sklearn: 'scikitlearn',
 };
 
+function generateHtmlForAllIcons() {
+  const iconEntries = Object.keys(icons);
+  const iconSize = 48; // Tamanho dos ícones em pixels
+
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Skill Icons</title>
+      <style>
+        body { font-family: Arial, sans-serif; display: flex; flex-wrap: wrap; justify-content: center; margin: 0; padding: 20px; background-color: #f5f5f5; }
+        .icon-container { width: ${iconSize}px; height: ${iconSize}px; margin: 10px; display: flex; align-items: center; justify-content: center; }
+        .icon-container svg { width: 100%; height: 100%; }
+      </style>
+    </head>
+    <body>
+      ${iconEntries.map(iconName => `
+        <div class="icon-container" title="${iconName}">
+          ${icons[iconName]}
+        </div>
+      `).join('')}
+    </body>
+    </html>
+  `;
+}
+
 // Função corrigida para mapear os nomes curtos com nomes completos e aplicar o tema se especificado
 function parseShortNames(names, theme) {
   return names.map(name => {
@@ -84,6 +112,12 @@ function generateSvg(iconNames, perLine = 15) {
 async function handleRequest(request) {
   const { pathname, searchParams } = new URL(request.url);
   const path = pathname.replace(/^\/|\/$/g, '');
+
+    // Serve a página HTML quando a rota for `/`
+  if (!path) {
+    const html = generateHtmlForAllIcons();
+    return new Response(html, { headers: { 'Content-Type': 'text/html' } });
+  }
 
   if (path === 'icons') {
     const iconParam = searchParams.get('i') || searchParams.get('icons');
