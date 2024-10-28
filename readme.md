@@ -63,7 +63,7 @@ Want to center the icons in your readme? The SVGs are automatically resized, so 
 ```html
 <p align="center">
     <img src="https://skill-icons-v2.vercel.app/api/icons?i=git,kubernetes,docker,c,vim" />
-  </a>
+</p>
 ```
 
 <p align="center">
