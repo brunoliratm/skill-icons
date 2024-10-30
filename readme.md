@@ -5,6 +5,16 @@
 <br>
 <br>
 
+# Skill Icons
+
+The **Skill Icons** project allows you to stylishly showcase your skills in your GitHub README. With an easy-to-integrate interface, it offers a vast library of customizable icons representing a variety of popular technologies and tools. You can adjust the theme (light or dark) so that the icons match the visual style of your project, and center the icons for a more organized and visually appealing display.
+
+### Key Features:
+- **Icon Specification**: Customize your skills display by including a list of your technologies directly in the URL. Just modify the `?i=` parameter with your desired skills.
+- **Light and Dark Themes**: Set the icon background to light or dark depending on your project theme.
+- **Centering Icons**: Use a simple HTML tag to align icons to the center, enhancing visual organization.
+- **Comprehensive Icon List**: A broad collection of icons is available, allowing you to showcase all your preferred skills and tools.
+
 
 # Docs
 
