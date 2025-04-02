@@ -193,6 +193,4 @@ Here's a list of all the icons currently supported. Feel free to open an issue t
 
 <br>
 
-## 💖 Support the Project
-
-To support the project directly, feel free to open issues for icon suggestions, or contribute with a pull request!
+feel free to open issues for icon suggestions, or contribute with a pull request!
