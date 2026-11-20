@@ -1,52 +1,42 @@
-# Skill Icons
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./.github/text-logo.svg">
+    <img src="./.github/text-logo-light.svg" width="280" alt="Skill Icons">
+  </picture>
+</p>
 
-Combine technology icons into a single SVG for a portfolio, documentation page, or GitHub profile. The image URL defines which icons appear, their order, their theme, and how many fit on each row.
+<p align="center">Build an SVG of your tech stack for a website, portfolio, or docs.</p>
 
-![TypeScript, React, Node.js, PostgreSQL, Docker, and Git](https://skill-icons-v2.vercel.app/api/icons?i=ts,react,node,postgres,docker,git&theme=dark&perline=6)
+<p align="center">
+  <a href="https://skill-icons-v2.vercel.app/"><strong>Open the icon builder</strong></a> ·
+  <a href="https://skill-icons-v2.vercel.app/#catalog">Browse the library</a>
+</p>
 
-[Open the icon builder](https://skill-icons-v2.vercel.app/) · [Browse the icon library](https://skill-icons-v2.vercel.app/#catalog)
+## Pick your icons
 
-## Embed an icon set
+![JavaScript, TypeScript, React, Node.js, Python, and Docker](https://skill-icons-v2.vercel.app/api/icons?i=js,ts,react,node,py,docker)
 
-Search the library by name or shortcut, select your icons, and choose **Copy Markdown**. You can also use the image URL directly as the source of an HTML image.
+List your icons in display order. Paste this into Markdown, or use the URL as an HTML image source.
 
-**Markdown**
-
-```markdown
-![TypeScript, React, and Node.js](https://skill-icons-v2.vercel.app/api/icons?i=ts,react,node)
+```md
+![My stack](https://skill-icons-v2.vercel.app/api/icons?i=js,ts,react,node,py,docker)
 ```
 
-**HTML**
+Full names and shortcuts work together, including `js` for JavaScript and `py` for Python. [All shortcuts](./lib/aliases.json)
 
-```html
-<img
-  src="https://skill-icons-v2.vercel.app/api/icons?i=ts,react,node"
-  alt="TypeScript, React, and Node.js"
-/>
-```
+## Choose a theme
 
-## Customize the URL
+| Light (default) | Dark |
+| :--- | :--- |
+| ![React, Node.js, and Figma with light backgrounds](https://skill-icons-v2.vercel.app/api/icons?i=react,node,figma&theme=light) | ![React, Node.js, and Figma with dark backgrounds](https://skill-icons-v2.vercel.app/api/icons?i=react,node,figma&theme=dark) |
+| `&theme=light` | `&theme=dark` |
 
-`GET /api/icons` returns an image with the content type `image/svg+xml`.
+## Wrap into rows
 
-| Parameter | Accepted values | Default |
-| --- | --- | --- |
-| `i` (also `icons`) | Comma-separated icon names or shortcuts, in display order | Required |
-| `theme` (also `t`) | `light` or `dark` for icons with themed variants | `light` |
-| `perline` | An integer from `1` to `50` | All icons on one row |
+![The same six icons arranged in two rows of three](https://skill-icons-v2.vercel.app/api/icons?i=js,ts,react,node,py,docker&perline=3)
 
-For example, the following URL places three icons on each row and uses the dark theme.
+Add `&perline=3` for three icons per row. Choose any value from 1 to 50, or omit it for a single row.
 
-```text
-https://skill-icons-v2.vercel.app/api/icons?i=ts,react,node,postgres,docker,git&theme=dark&perline=3
-```
+---
 
-You can mix full names with shortcuts such as `js` for `javascript`, `py` for `python`, and `k8s` for `kubernetes`. Names are case-insensitive. See the [full shortcut list](./lib/aliases.json).
-
-The API skips unrecognized names and returns `404` if none match. An invalid `perline` value returns `400`.
-
-Missing an icon? [Suggest it for the library](https://github.com/brunoliratm/skill-icons/issues/new?template=suggest-icon.yml).
-
-## License
-
-[MIT License](./LICENSE)
+[Suggest an icon](https://github.com/brunoliratm/skill-icons/issues/new?template=suggest-icon.yml) · [MIT License](./LICENSE)
