@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skill Icons · README icon builder</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a href="/" class="brand"
+        ><img src="/wordmark.svg" alt="Skill Icons"
+      /></a>
+      <nav aria-label="Main navigation">
+        <a href="#catalog">Icon library</a>
+        <a href="https://github.com/brunoliratm/skill-icons">GitHub</a>
+      </nav>
+    </header>
+    <main>
+      <section aria-labelledby="title">
+        <h1 id="title">README icon builder</h1>
+        <p class="intro">
+          Build a row of skill icons for your GitHub profile or project.
+        </p>
+        <div class="workspace">
+          <div class="controls">
+            <label for="names">Icon names</label>
+            <textarea
+              id="names"
+              rows="2"
+              aria-describedby="hint"
+              spellcheck="false"
+              autocapitalize="off"
+            >
+js, ts, react, node, py, git, docker, figma</textarea
+            >
+            <p class="hint" id="hint">
+              Separate names with commas. Shortcuts like <code>js</code> and
+              <code>py</code> work too.
+            </p>
+            <div class="options">
+              <fieldset id="theme">
+                <legend>Icon theme</legend>
+                <div class="segments">
+                  <label
+                    ><input
+                      class="sr"
+                      type="radio"
+                      name="theme"
+                      value="dark"
+                      checked
+                    /><span>Dark</span></label
+                  >
+                  <label
+                    ><input
+                      class="sr"
+                      type="radio"
+                      name="theme"
+                      value="light"
+                    /><span>Light</span></label
+                  >
+                </div>
+              </fieldset>
+              <div>
+                <label for="limit">Icons per row</label>
+                <div class="stepper">
+                  <button
+                    id="decrease"
+                    type="button"
+                    aria-label="Decrease icons per row"
+                  >
+                    −
+                  </button>
+                  <input
+                    id="limit"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    value="4"
+                    aria-describedby="limit-help"
+                  />
+                  <button
+                    id="increase"
+                    type="button"
+                    aria-label="Increase icons per row"
+                  >
+                    +
+                  </button>
+                </div>
+                <span class="sr" id="limit-help"
+                  >Enter a whole number from 1 to 50. Use the up and down arrow
+                  keys to adjust.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="document">
+            <div class="filebar">
+              <strong>README.md</strong><span>Preview</span>
+            </div>
+            <div class="canvas">
+              <img id="preview" alt="Preview of your selected skill icons" />
+            </div>
+            <div class="export">
+              <label for="markdown">Markdown</label
+              ><button id="copy">Copy Markdown</button>
+              <textarea
+                id="markdown"
+                rows="2"
+                readonly
+                spellcheck="false"
+              ></textarea>
+            </div>
+            <p id="status" role="status"></p>
+          </div>
+        </div>
+      </section>
+      <section id="catalog" aria-labelledby="library-title">
+        <div class="library-head">
+          <div class="library-title">
+            <h2 id="library-title">Icon library</h2>
+            <span id="count"></span>
+          </div>
+          <div class="search">
+            <label class="sr" for="search"
+              >Find an icon by name or shortcut</label
+            ><input
+              id="search"
+              type="text"
+              role="searchbox"
+              placeholder="Find an icon…"
+              autocomplete="off"
+            />
+            <button
+              type="button"
+              id="clear-search"
+              aria-label="Clear search"
+              hidden
+            >
+              ×
+            </button>
+          </div>
+        </div>
+        <p class="library-hint">Select an icon to add it to your README.</p>
+        <div id="matches"></div>
+        <button id="more" hidden>Show more icons</button>
+        <p id="catalog-status" role="status"></p>
+      </section>
+    </main>
+  </body>
+</html>

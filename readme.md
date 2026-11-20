@@ -38,11 +38,20 @@ Change the `?i=javascript,html,css` to a list of your skills separated by ","s! 
 
 <br>
 
+Short names work alongside full names (for example, `js`, `ts`, `py`, and `node`).
+Add `perline` with a whole number from 1 to 50 to wrap the icons. Omitting it keeps all icons in one row.
+
+```md
+![My Skills](https://skill-icons-v2.vercel.app/api/icons?i=js,ts,react,node,py&perline=3)
+```
+
+Use the homepage to find icons, try themes, and copy the Markdown. For a local preview, run `npm run dev` and open the printed address. Generated snippets use the current site's address.
+
 # Themed Icons
 
 Some icons have a dark and light themed background. You can specify which theme you want as a url parameter.
 
-This is optional. The default theme is dark.
+This is optional. The API defaults to the light theme.
 
 Change the `&theme=light` to either `dark` or `light`. The theme is the background color, so light theme has a white icon background, and dark has a black-ish.
 

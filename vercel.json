@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "dist",
+  "functions": {
+    "api/icons.js": { "includeFiles": "dist/icons.json" }
+  }
+}

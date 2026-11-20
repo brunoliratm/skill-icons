@@ -4,7 +4,7 @@
 	"main": "index.js",
 	"license": "MIT",
 	"scripts": {
-		"dev": "node build.js",
+		"dev": "node build.js && node dev.js",
 		"build": "node build.js build --output dist"
 	},
 	"devDependencies": {
