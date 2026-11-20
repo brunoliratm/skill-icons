@@ -12,7 +12,7 @@ let visibleCount = 24;
 function iconPath(ids, themeValue, perLine) {
   const query = new URLSearchParams({ i: ids, theme: themeValue });
   if (perLine) query.set('perline', perLine);
-  return '/api/icons?' + query.toString();
+  return '/api/icons?' + query.toString().replaceAll('%2C', ',');
 }
 
 function tile(id) {
@@ -124,7 +124,7 @@ function showCatalog() {
         .filter(Boolean)
         .join(', ');
       render();
-      byId('catalog-status').textContent = id + ' added to your README.';
+      byId('catalog-status').textContent = id + ' added to your selection.';
     });
     return button;
   });
